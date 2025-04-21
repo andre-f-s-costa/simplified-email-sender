@@ -1,0 +1,54 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+    networks:
+      - custom
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+      - ./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+
+  mongodb:
+    image: mongo:6
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: email_service
+    networks:
+      - custom
+    volumes:
+      - mongodb_data:/data/db
+
+  email-service:
+    build: .
+    container_name: email-service
+    depends_on:
+      - rabbitmq
+      - mongodb
+    ports:
+      - "3000:3000"
+    environment:
+      DB_URL: ${DB_URL}
+      RABBITMQ_URL: ${RABBITMQ_URL}
+      SENDER_NAME: ${SENDER_NAME}
+      SENDER_PASS: ${SENDER_PASS}
+      SENDER_EMAIL: ${SENDER_EMAIL}
+      ORIGIN: ${ORIGIN}
+    restart: unless-stopped
+    command: sh -c "sleep 15 && node dist/index.js"
+    networks:
+      - custom
+
+volumes:
+  rabbitmq_data:
+  mongodb_data:
+
+networks:
+  custom:
