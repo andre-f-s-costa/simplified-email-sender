@@ -52,7 +52,7 @@ This email sender is a lightweight and modular service that seamlessly integrate
 
 ## Endpoint usage examples:
 
-### POST /post-email/
+### POST /email-queue/
 BODY
 ```
 {
@@ -67,7 +67,7 @@ RESPONSE
 "Email sent to queue. You can check the status of this email using the id: 3f4f0ceb-0ca4-4282-a760-01df45000edf"
 ```
 
-### GET /get-email/3f4f0ceb-0ca4-4282-a760-01df45000edf
+### GET /email-logs/3f4f0ceb-0ca4-4282-a760-01df45000edf
 RESPONSE
 ```
 {
@@ -83,7 +83,7 @@ RESPONSE
 }
 ```
 
-### GET /get-emails/
+### GET /email-logs/
 RESPONSE
 ```
 [
