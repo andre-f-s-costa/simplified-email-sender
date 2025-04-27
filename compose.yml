@@ -13,6 +13,12 @@ services:
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
       - ./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:15672/"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+      start_period: 20s
 
   mongodb:
     image: mongo:6
@@ -25,6 +31,12 @@ services:
       - custom
     volumes:
       - mongodb_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+      start_period: 20s
 
   email-service:
     build: .
@@ -45,6 +57,12 @@ services:
     command: sh -c "sleep 15 && node dist/index.js"
     networks:
       - custom
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 15s
+      retries: 3
+      start_period: 15s
 
 volumes:
   rabbitmq_data:
