@@ -22,8 +22,8 @@ This email sender is a lightweight and modular service that seamlessly integrate
 ## Default execution
 
 - ### Set environment variables first:
-  - Create an .env file
-  - Add the variables as the example below:
+  - Rename the file **.env.example** to **.env**
+  - Fill the variables as the example below:
     - SENDER_NAME = "JOE"
     - SENDER_PASS = "xxxx xxxx xxxx xxxx"
     - SENDER_EMAIL = "joe@gmail.com"
@@ -31,9 +31,9 @@ This email sender is a lightweight and modular service that seamlessly integrate
     - RABBITMQ_URL = "amqp://admin:admin@rabbitmq:5672"
   - Optional variable **(to use in API integration)**:
     - ORIGIN = ""
-  - Replace each placeholder with your actual credentials
   - **OBS:**
-    - SENDER_PASS may vary depending on the provider (gmail, hotmail, etc)
+    - Replace each placeholder with **your** actual credentials
+    - **SENDER_PASS** may vary depending on the provider (gmail, hotmail, etc)
 
 - ### Via docker:
   - **Requirements**:
@@ -52,7 +52,7 @@ This email sender is a lightweight and modular service that seamlessly integrate
 
 ## Endpoint usage examples:
 
-### POST /post-email/
+### POST /email-queue/
 BODY
 ```
 {
@@ -67,7 +67,7 @@ RESPONSE
 "Email sent to queue. You can check the status of this email using the id: 3f4f0ceb-0ca4-4282-a760-01df45000edf"
 ```
 
-### GET /get-email/3f4f0ceb-0ca4-4282-a760-01df45000edf
+### GET /email-logs/3f4f0ceb-0ca4-4282-a760-01df45000edf
 RESPONSE
 ```
 {
@@ -83,7 +83,7 @@ RESPONSE
 }
 ```
 
-### GET /get-emails/
+### GET /email-logs/
 RESPONSE
 ```
 [
