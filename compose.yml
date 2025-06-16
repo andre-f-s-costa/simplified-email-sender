@@ -53,6 +53,8 @@ services:
       SENDER_PASS: ${SENDER_PASS}
       SENDER_EMAIL: ${SENDER_EMAIL}
       ORIGIN: ${ORIGIN}
+      HOST_PROVIDER_URL: ${HOST_PROVIDER_URL}
+      PORT_PROVIDER: ${PORT_PROVIDER}
     restart: unless-stopped
     command: sh -c "sleep 15 && node dist/index.js"
     networks:
