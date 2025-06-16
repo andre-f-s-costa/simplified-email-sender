@@ -29,11 +29,16 @@ This email sender is a lightweight and modular service that seamlessly integrate
     - SENDER_EMAIL = "joe@gmail.com"
     - DB_URL = "mongodb://mongodb:27017/email_service"
     - RABBITMQ_URL = "amqp://admin:admin@rabbitmq:5672"
+    - HOST_PROVIDER_URL = "smtp.gmail.com"
+    - PORT_PROVIDER = "465"
   - Optional variable **(to use in API integration)**:
     - ORIGIN = ""
   - **OBS:**
     - Replace each placeholder with **your** actual credentials
     - **SENDER_PASS** may vary depending on the provider (gmail, hotmail, etc)
+    - It's recommended to use **GMAIL**, **HOTMAIL** or **YAHOO**.
+    - **OUTLOOK** and even **GMAIL** may require a more robust type of auth (OAuth2) depending on your account configuration, it is planned to be added in future updates.
+    - For example, to use gmail you can activate **2-step verification** and create an **"App password"** in [google account security](https://myaccount.google.com/security?gar=WzEyMF0&hl=en&utm_source=OGB&utm_medium=act), then you will use the created password to set **SENDER_PASS** variable.
 
 - ### Via docker:
   - **Requirements**:
@@ -66,6 +71,13 @@ RESPONSE
 ```
 "Email sent to queue. You can check the status of this email using the id: 3f4f0ceb-0ca4-4282-a760-01df45000edf"
 ```
+
+---
+
+### **OBS:**
+the field "message" is only used when not using the field "html", it's a way to ensure the message is sent even if the html structure doesn't work for some **provider** reason.
+
+---
 
 ### GET /email-logs/3f4f0ceb-0ca4-4282-a760-01df45000edf
 RESPONSE
