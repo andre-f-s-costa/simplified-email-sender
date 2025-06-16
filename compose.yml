@@ -9,7 +9,7 @@ services:
       RABBITMQ_DEFAULT_USER: admin
       RABBITMQ_DEFAULT_PASS: admin
     networks:
-      - custom
+      - email-network
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
       - ./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
@@ -28,7 +28,7 @@ services:
     environment:
       MONGO_INITDB_DATABASE: email_service
     networks:
-      - custom
+      - email-network
     volumes:
       - mongodb_data:/data/db
     healthcheck:
@@ -53,10 +53,12 @@ services:
       SENDER_PASS: ${SENDER_PASS}
       SENDER_EMAIL: ${SENDER_EMAIL}
       ORIGIN: ${ORIGIN}
+      HOST_PROVIDER_URL: ${HOST_PROVIDER_URL}
+      PORT_PROVIDER: ${PORT_PROVIDER}
     restart: unless-stopped
     command: sh -c "sleep 15 && node dist/index.js"
     networks:
-      - custom
+      - email-network
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000/"]
       interval: 30s
@@ -69,4 +71,4 @@ volumes:
   mongodb_data:
 
 networks:
-  custom:
+  email-network:

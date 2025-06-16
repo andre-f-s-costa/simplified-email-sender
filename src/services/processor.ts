@@ -29,8 +29,8 @@ const consumeMessageService = async ():Promise<void> => {
 
             // Here you can change the type of the email that will be sending
             const transporter = nodemailer.createTransport({
-                host: "smtp.gmail.com", // server
-                port: 465, // server door
+                host: process.env.HOST_PROVIDER_URL, // server
+                port: Number(process.env.PORT_PROVIDER), // server door
                 secure: true, // activates SSL
                 auth: {
                     user: process.env.SENDER_EMAIL, //set the email through environment variable
